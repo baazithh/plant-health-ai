@@ -234,7 +234,7 @@ export default function Home() {
       </section>
 
       {/* Treatment Plan Section */}
-      {diagnosis && (
+      {diagnosis && !diagnosis.error && (
         <section className="space-y-12">
           <div className="flex flex-col items-center text-center space-y-4">
             <h3 className="text-2xl font-medium tracking-tight text-dark-slate">Treatment Ecosystem</h3>
@@ -248,7 +248,7 @@ export default function Home() {
               </div>
               <div className="space-y-2">
                 <h4 className="text-sm font-bold uppercase tracking-widest text-dark-slate">Mechanical Action</h4>
-                <p className="text-sm text-slate-500 leading-relaxed">{diagnosis.treatment.mechanical}</p>
+                <p className="text-sm text-slate-500 leading-relaxed">{diagnosis.details?.treatment?.mechanical}</p>
               </div>
             </motion.div>
 
@@ -258,7 +258,7 @@ export default function Home() {
               </div>
               <div className="space-y-2">
                 <h4 className="text-sm font-bold uppercase tracking-widest text-dark-slate">Biological Remedy</h4>
-                <p className="text-sm text-slate-500 leading-relaxed">{diagnosis.treatment.biological}</p>
+                <p className="text-sm text-slate-500 leading-relaxed">{diagnosis.details?.treatment?.biological}</p>
               </div>
             </motion.div>
 
@@ -268,7 +268,7 @@ export default function Home() {
               </div>
               <div className="space-y-2">
                 <h4 className="text-sm font-bold uppercase tracking-widest text-dark-slate">Chemical Solution</h4>
-                <p className="text-sm text-slate-500 leading-relaxed">{diagnosis.treatment.chemical}</p>
+                <p className="text-sm text-slate-500 leading-relaxed">{diagnosis.details?.treatment?.chemical}</p>
               </div>
             </motion.div>
           </div>
