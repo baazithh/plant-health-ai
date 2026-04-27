@@ -124,10 +124,17 @@ export default function Home() {
                       <p className="text-sm font-medium">Drag and drop specimen image</p>
                       <p className="text-xs text-slate-400">Supported formats: JPG, PNG, WEBP</p>
                     </div>
-                    <label className="bg-dark-slate text-white text-xs font-semibold uppercase tracking-widest px-8 py-4 rounded-full cursor-pointer hover:bg-slate-800 transition-all">
-                      Select File
-                      <input type="file" className="hidden" onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])} />
-                    </label>
+                    <div className="flex gap-4">
+                      <label className="bg-dark-slate text-white text-[10px] font-bold uppercase tracking-[0.2em] px-8 py-4 rounded-full cursor-pointer hover:bg-slate-800 transition-all shadow-lg hover:shadow-emerald-500/10">
+                        Select File
+                        <input type="file" className="hidden" accept="image/*" onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])} />
+                      </label>
+                      <label className="bg-white text-dark-slate border border-slate-200 text-[10px] font-bold uppercase tracking-[0.2em] px-8 py-4 rounded-full cursor-pointer hover:bg-slate-50 transition-all flex items-center gap-2">
+                        <Camera className="w-3 h-3" />
+                        Camera
+                        <input type="file" className="hidden" accept="image/*" capture="environment" onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])} />
+                      </label>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
