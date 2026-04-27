@@ -84,9 +84,11 @@ export default function ChatBot({ currentDiagnosis }: { currentDiagnosis?: any }
                       ? "bg-dark-slate text-white" 
                       : "bg-slate-100 text-dark-slate"
                   }`}>
-                    <ReactMarkdown className="prose prose-sm prose-slate">
-                      {m.content}
-                    </ReactMarkdown>
+                    <div className="prose prose-sm prose-slate">
+                      <ReactMarkdown>
+                        {m.content}
+                      </ReactMarkdown>
+                    </div>
                   </div>
                 </div>
               ))}
