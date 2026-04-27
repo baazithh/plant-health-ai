@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "AI Plant Health Monitoring",
   description: "Advanced AI-based plant disease detection and treatment planning",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
