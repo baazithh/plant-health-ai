@@ -164,16 +164,33 @@ export default function Home() {
             className="w-full grid lg:grid-cols-2 gap-12 text-left"
           >
             {/* Image Preview with Bounding Box Placeholder */}
-            <div className="relative group rounded-3xl overflow-hidden digital-paper aspect-[4/3]">
+            <div className="relative group rounded-3xl overflow-hidden digital-paper aspect-[4/3] bg-slate-50">
               {preview && (
                 <img src={preview} alt="Specimen" className="w-full h-full object-cover" />
               )}
-              {/* Mock Bounding Box Overlay */}
-              <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 border-2 border-emerald-green rounded-lg glass animate-pulse-soft">
-                <div className="absolute top-0 left-0 -translate-y-1/2 bg-emerald-green text-[8px] font-bold text-white uppercase px-2 py-0.5 tracking-widest">
-                  Target: {diagnosis.disease}
-                </div>
-              </div>
+              
+              {/* Dynamic Defect Bounding Boxes */}
+              <AnimatePresence>
+                {diagnosis.defects?.map((defect: any, idx: number) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5 + (idx * 0.2) }}
+                    className="absolute border-2 border-emerald-green glass rounded-lg"
+                    style={{
+                      left: `${(defect.x / 400) * 100}%`,
+                      top: `${(defect.y / 300) * 100}%`,
+                      width: `${(defect.w / 400) * 100}%`,
+                      height: `${(defect.h / 300) * 100}%`,
+                    }}
+                  >
+                    <div className="absolute top-0 left-0 -translate-y-full bg-emerald-green text-[8px] font-bold text-white uppercase px-1 py-0.5 tracking-widest whitespace-nowrap rounded-t-sm">
+                      {defect.label}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
 
             {/* Diagnosis Card */}
