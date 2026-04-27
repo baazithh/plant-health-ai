@@ -4,12 +4,15 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Camera, Leaf, AlertCircle, ShieldCheck, Zap, Droplets, Info } from "lucide-react";
 import ChatBot from "./components/ChatBot";
+import CameraModal from "./components/CameraModal";
 
 export default function Home() {
   const [isUploading, setIsUploading] = useState(false);
   const [diagnosis, setDiagnosis] = useState<any>(null);
   const [dragActive, setDragActive] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleFileUpload = async (file: File) => {
     setIsUploading(true);
