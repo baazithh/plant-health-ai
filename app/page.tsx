@@ -17,32 +17,31 @@ export default function Home() {
   const handleFileUpload = async (file: File) => {
     setIsUploading(true);
     setPreview(URL.createObjectURL(file));
+    setError(null);
     
-    // Simulate API delay
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      // Mock call or real if backend is up
-      // const response = await fetch("http://localhost:8000/predict", { method: "POST", body: formData });
-      // const data = await response.json();
+      const response = await fetch("http://localhost:8000/predict", { 
+        method: "POST", 
+        body: formData 
+      });
       
-      // Simulation for now
-      setTimeout(() => {
-        setDiagnosis({
-          disease: "Early Blight",
-          confidence: 94.2,
-          severity: 65,
-          treatment: {
-            mechanical: "Prune heavily infected lower leaves and destroy them. Ensure proper spacing between plants.",
-            biological: "Apply Bacillus subtilis based bio-fungicides to the plant and soil.",
-            chemical: "Use Chlorothalonil or Copper-based fungicides if the infection persists."
-          }
-        });
-        setIsUploading(false);
-      }, 2000);
-    } catch (error) {
-      console.error(error);
+      if (!response.ok) throw new Error("Failed to connect to AI Engine");
+      
+      const data = await response.json();
+      
+      if (data.error) {
+        setError(data.error);
+        setDiagnosis(data); // We still set it to show the "Non-Plant" state
+      } else {
+        setDiagnosis(data);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("AI Engine is offline. Please ensure the backend is running.");
+    } finally {
       setIsUploading(false);
     }
   };
@@ -198,6 +197,12 @@ export default function Home() {
               <div className="space-y-2">
                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-green">Diagnosis Report</span>
                 <h3 className="text-4xl font-medium text-dark-slate">{diagnosis.disease}</h3>
+                {error && (
+                  <p className="text-sm text-red-500 bg-red-50 p-4 rounded-xl border border-red-100 mt-4 leading-relaxed">
+                    <span className="font-bold underline uppercase text-[10px] block mb-1">Precision Alert</span>
+                    {error}
+                  </p>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
