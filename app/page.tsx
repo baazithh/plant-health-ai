@@ -132,11 +132,13 @@ export default function Home() {
                         Select File
                         <input type="file" className="hidden" accept="image/*" onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])} />
                       </label>
-                      <label className="bg-white text-dark-slate border border-slate-200 text-[10px] font-bold uppercase tracking-[0.2em] px-8 py-4 rounded-full cursor-pointer hover:bg-slate-50 transition-all flex items-center gap-2">
+                      <button 
+                        onClick={() => setIsCameraOpen(true)}
+                        className="bg-white text-dark-slate border border-slate-200 text-[10px] font-bold uppercase tracking-[0.2em] px-8 py-4 rounded-full cursor-pointer hover:bg-slate-50 transition-all flex items-center gap-2"
+                      >
                         <Camera className="w-3 h-3" />
                         Camera
-                        <input type="file" className="hidden" accept="image/*" capture="environment" onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])} />
-                      </label>
+                      </button>
                     </div>
                   </motion.div>
                 )}
@@ -144,6 +146,15 @@ export default function Home() {
             </div>
           </motion.div>
         )}
+
+        <AnimatePresence>
+          {isCameraOpen && (
+            <CameraModal 
+              onCapture={handleFileUpload} 
+              onClose={() => setIsCameraOpen(false)} 
+            />
+          )}
+        </AnimatePresence>
 
         {/* Result View */}
         {diagnosis && (
